@@ -1,1 +1,3 @@
-# RandonQuotes-Backend-Go
+# RandomQuotes Backend
+
+A backend API to serve the random quotes application.
