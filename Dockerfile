@@ -1,3 +1,4 @@
+ARG VERSION
 FROM golang
 WORKDIR /app
 COPY server.go /app/
