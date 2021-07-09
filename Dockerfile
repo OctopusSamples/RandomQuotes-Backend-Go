@@ -1,5 +1,5 @@
-ARG VERSION
 FROM golang
+ARG VERSION
 WORKDIR /app
 COPY server.go /app/
 COPY data /app/data/
