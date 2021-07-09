@@ -37,6 +37,10 @@ func quoteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+
 	authors, authErr := readLines("data/authors.txt")
 	quotes, quoteErr := readLines("data/quotes.txt")
 
