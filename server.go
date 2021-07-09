@@ -9,8 +9,11 @@ import (
 	"os"
 )
 
+var (
+	version string
+)
+
 func main() {
-	version := os.Getenv("VERSION")
 	if version == "" {
 		version = "1.0.0"
 		log.Printf("Defaulting to version %s", version)

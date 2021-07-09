@@ -1,9 +1,10 @@
 version: "3.9"
 services:
   backend:
-    image: "octopussamples/randomquotesbackendgo"
+    image: "octopussamples/randomquotesbackendgo:0.1.11"
     environment:
       PORT: 8082
+      VERSION: "ho"
     ports:
       - "8082:8082"
   frontend:
