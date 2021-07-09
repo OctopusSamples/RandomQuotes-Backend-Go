@@ -9,10 +9,14 @@ import (
 	"os"
 )
 
-const version = "1.0.0"
-
 func main() {
-	http.HandleFunc("/api/quote", quoteHandler)
+	version := os.Getenv("VERSION")
+	if version == "" {
+		version = "1.0.0"
+		log.Printf("Defaulting to version %s", version)
+	}
+
+	http.HandleFunc("/api/quote", quoteHandler(version))
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -26,35 +30,37 @@ func main() {
 	}
 }
 
-func quoteHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/api/quote" {
-		http.Error(w, "404 not found.", http.StatusNotFound)
-		return
-	}
+func quoteHandler(version string) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/api/quote" {
+			http.Error(w, "404 not found.", http.StatusNotFound)
+			return
+		}
 
-	if r.Method != "GET" {
-		http.Error(w, "Method is not supported.", http.StatusNotFound)
-		return
-	}
+		if r.Method != "GET" {
+			http.Error(w, "Method is not supported.", http.StatusNotFound)
+			return
+		}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "*")
 
-	authors, authErr := readLines("data/authors.txt")
-	quotes, quoteErr := readLines("data/quotes.txt")
+		authors, authErr := readLines("data/authors.txt")
+		quotes, quoteErr := readLines("data/quotes.txt")
 
-	if authErr == nil && quoteErr == nil {
-		randomLine := rand.Intn(len(authors))
+		if authErr == nil && quoteErr == nil {
+			randomLine := rand.Intn(len(authors))
 
-		json := "{\"quote\": \"" + quotes[randomLine] + "\", " +
-			"\"author\": \"" + authors[randomLine] + "\", " +
-			"\"appVersion\": \"" + version + "\"" +
-			"}"
+			json := "{\"quote\": \"" + quotes[randomLine] + "\", " +
+				"\"author\": \"" + authors[randomLine] + "\", " +
+				"\"appVersion\": \"" + version + "\"" +
+				"}"
 
-		fmt.Fprintf(w, json)
-	} else {
-		fmt.Fprintf(w, "Error")
+			fmt.Fprintf(w, json)
+		} else {
+			fmt.Fprintf(w, "Error")
+		}
 	}
 }
 
