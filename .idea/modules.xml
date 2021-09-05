@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../RandomQuotes-Frontend-Go/.idea/RandomQuotes-Frontend-Go.iml" filepath="$PROJECT_DIR$/../RandomQuotes-Frontend-Go/.idea/RandomQuotes-Frontend-Go.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/RandonQuotes-Backend-Go.iml" filepath="$PROJECT_DIR$/.idea/RandonQuotes-Backend-Go.iml" />
     </modules>
   </component>
