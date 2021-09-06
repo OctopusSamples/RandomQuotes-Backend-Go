@@ -29,7 +29,7 @@ func main() {
 
 	fmt.Printf("Starting server at port " + port + "\n")
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
-		log.Fatal(err)
+		log.Printf("Error: Unable to bind to the port " + port)
 	}
 }
 
